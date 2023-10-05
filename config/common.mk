@@ -91,7 +91,6 @@ PRODUCT_PACKAGES += \
 # Themes
 PRODUCT_PACKAGES += \
     ThemePicker \
-    ThemesStub \
     WallpapersOverlay
 
 # Face Unlock
