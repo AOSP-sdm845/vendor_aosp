@@ -90,14 +90,14 @@ ifneq ($(USE_CCACHE),)
 endif
 
 ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
-    KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(KERNEL_TOOLCHAIN_PATH)"
+    KERNEL_CROSS_COMPILE := CROSS_COMPILE='$(KERNEL_TOOLCHAIN_PATH)'
 else
-    KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(CCACHE_BIN) $(KERNEL_TOOLCHAIN_PATH)"
+    KERNEL_CROSS_COMPILE := CROSS_COMPILE='$(CCACHE_BIN) $(KERNEL_TOOLCHAIN_PATH)'
 endif
 
 # Needed for CONFIG_COMPAT_VDSO, safe to set for all arm64 builds
 ifeq ($(KERNEL_ARCH),arm64)
-   KERNEL_CROSS_COMPILE += CROSS_COMPILE_ARM32="$(KERNEL_TOOLCHAIN_arm)/$(KERNEL_TOOLCHAIN_PREFIX_arm)"
+   KERNEL_CROSS_COMPILE += CROSS_COMPILE_ARM32='$(KERNEL_TOOLCHAIN_arm)/$(KERNEL_TOOLCHAIN_PREFIX_arm)'
 endif
 
 # Clear this first to prevent accidental poisoning from env
@@ -108,18 +108,18 @@ KERNEL_MAKE_FLAGS += -j$(shell prebuilts/tools-custom/$(HOST_PREBUILT_TAG)/bin/n
 
 ifeq ($(KERNEL_ARCH),arm)
   # Avoid "Unknown symbol _GLOBAL_OFFSET_TABLE_" errors
-  KERNEL_MAKE_FLAGS += CFLAGS_MODULE="-fno-pic"
+  KERNEL_MAKE_FLAGS += CFLAGS_MODULE='-fno-pic'
 endif
 
 ifeq ($(KERNEL_ARCH),arm64)
   # Avoid "unsupported RELA relocation: 311" errors (R_AARCH64_ADR_GOT_PAGE)
-  KERNEL_MAKE_FLAGS += CFLAGS_MODULE="-fno-pic"
+  KERNEL_MAKE_FLAGS += CFLAGS_MODULE='-fno-pic'
 endif
 
 ifeq ($(HOST_OS),darwin)
-  KERNEL_MAKE_FLAGS += HOSTCFLAGS="-I$(BUILD_TOP)/external/elfutils/libelf -I/usr/local/opt/openssl/include -fuse-ld=lld" HOSTLDFLAGS="-L/usr/local/opt/openssl/lib -fuse-ld=lld"
+  KERNEL_MAKE_FLAGS += HOSTCFLAGS='-I$(BUILD_TOP)/external/elfutils/libelf -I/usr/local/opt/openssl/include -fuse-ld=lld' HOSTLDFLAGS='-L/usr/local/opt/openssl/lib -fuse-ld=lld'
 else
-  KERNEL_MAKE_FLAGS += CPATH="/usr/include:/usr/include/x86_64-linux-gnu" HOSTCFLAGS="-fuse-ld=lld" HOSTLDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib64 -fuse-ld=lld"
+  KERNEL_MAKE_FLAGS += CPATH='/usr/include:/usr/include/x86_64-linux-gnu' HOSTCFLAGS='-fuse-ld=lld' HOSTLDFLAGS='-L/usr/lib/x86_64-linux-gnu -L/usr/lib64 -fuse-ld=lld'
 endif
 
 ifneq ($(TARGET_KERNEL_ADDITIONAL_FLAGS),)
