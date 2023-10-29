@@ -1,5 +1,3 @@
-PRODUCT_BRAND ?= aosp
-
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
@@ -118,8 +116,5 @@ PRODUCT_PACKAGES += \
 
 # Charger images
 include vendor/aosp/config/charger-res.mk
-
-# Branding
-include vendor/aosp/config/branding.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
